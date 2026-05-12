@@ -13,10 +13,42 @@ git remote -v
 --> Tạo một nhánh mới và đứng trên nhánh đó
 git checkout -b <tên nhánh>
 
+--> Nhảy qua nhánh khác
+git checkout <tên nhánh>
+
 --> Thêm code vào git
 git add .
 
 --> Commit 
 git commit -m "-------"
 
---> 
+--> Lệnh để push lên remote
+git push -u origin <tên nhánh>
+
+Workflow để hoạt động nhóm:
+1. Trước khi tiếp tục làm, phải pull và merge code mới nhất từ github
+2. Sau khi làm xong lại tiếp tục pull và merge code trước khi push
+
+Bước 1: Trước khi làm, nếu có thay đổi gì thì add, commit để lưu trước (nếu chưa có thay đổi gì thì bỏ qua)
+        Rồi chuyển qua nhánh develop để lấy code gần nhất về
+--> Chuyển qua develop
+git checkout develop
+
+--> Pull code về
+git pull
+
+--> Chuyển qua nhánh đang làm
+git checkout <tên nhánh>
+
+--> Nếu muốn tạo nhánh mới để làm
+git checkout -b <tên nhánh>
+
+--> Merge code develop vào nhánh hiện tại (Nếu conflic thì báo lại cho Leader)
+git merge develop
+
+Sau khi merge, add và commit lại 1 lần nữa trước khi push
+--> Push code lên remote (Trường hợp trên remote chưa có nhánh đó)
+git push -u origin <tên nhánh>
+
+--> Push code lên remote (Trường hợp trên remote đã có nhánh đó)
+git push
