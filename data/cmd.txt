@@ -1,5 +1,22 @@
+--> Clone 1 repo
+git clone <link>
+
 --> Khởi tạo Git: (Khởi tạo .git trong project)
 git init
 
 --> Gắn link Repo: (Gắn link Repo vào project local)
 git remote add origin <link>
+
+--> Kiểm tra link đã được gắn chưa
+git remote -v
+
+--> Tạo một nhánh mới và đứng trên nhánh đó
+git checkout -b <tên nhánh>
+
+--> Thêm code vào git
+git add .
+
+--> Commit 
+git commit -m "-------"
+
+--> 
