@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Git Commands</title>
+
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">
+      🐙 Git Commands
+    </div>
+
+    <nav class="navbar">
+      <a href="../index.html">Home</a>
+      <a href="gitcode.html">Git Commands</a>
+      <!-- <a href="#">Projects</a>
+      <a href="#">Contact</a> -->
+    </nav>
+  </header>
+
+  <section class="page-title">
+    <h1>Git & Github Commands</h1>
+    <p>Các lệnh cơ bản dùng trong teamwork Github</p>
+  </section>
+
+  <nav class="page-section-nav" aria-label="Điều hướng nội dung Git">
+    <a href="#cmd-input">Git Code</a>
+    <a href="#git-guidelines">Repository</a>
+    <a href="#branch-example">Flow</a>
+    <a href="#project-workflow">Workflow</a>
+    <a href="#teamwork-rules">Teamwork</a>
+    <a href="#command-list">Commands</a>
+  </nav>
+
+  <!-- Terminal-like Command Input -->
+  <section class="cmd-terminal-section" id="cmd-input">
+    <div class="cmd-toolbar" id="cmd-toolbar">
+      <div class="cmd-toolbar-left">
+        <span class="cmd-dot red"></span>
+        <span class="cmd-dot yellow"></span>
+        <span class="cmd-dot green"></span>
+      </div>
+      <div class="cmd-toolbar-right">
+        <button id="cmd-save-btn">💾 Lưu</button>
+        <span id="cmd-status" style="font-size:0.98em;"></span>
+      </div>
+    </div>
+    <textarea id="cmd-textarea" class="cmd-textarea" rows="8" spellcheck="false" placeholder="Nhập lệnh như terminal..."></textarea>
+  </section>
+
+  <section class="cmd-terminal-section git-guidelines-section" id="git-guidelines">
+    <div class="cmd-toolbar guideline-toolbar" id="guideline-toolbar">
+      <div class="cmd-toolbar-left">
+        <span class="cmd-dot red"></span>
+        <span class="cmd-dot yellow"></span>
+        <span class="cmd-dot green"></span>
+      </div>
+    </div>
+
+    
+
+    <h1>Quy cách đặt tên Repository</h1>
+    <strong>Dựa theo loại project - </strong> Tên repository nên phản ánh rõ loại dự án
+    <div class="guideline-box">
+      
+      <p>
+        Dựa vào loại, tên của project có thể đặt theo quy cách :
+        <ul>
+          <li><strong>Web App:</strong> webpr-tên-dự-án</li>
+          <li><strong>Android App:</strong> androidpr-tên-dự-án</li>
+          <li><strong>Game </strong> gamepr-tên-game</li>
+        </ul>
+      </p>
+
+      <p>
+        Nếu là bài tập, các Exercise có thể đặt tên theo dạng ex-tên-môn-tên-bài:
+        <ul>
+          <li>ex-javapr-bt1</li>
+          <li>ex-pythonpr-bt2</li>
+          <li>ex-webpr-bt3</li>
+          (Có thể gộp tất cả các project bài tập thành 1 Repository duy nhất như "ex-gamepr" và lưu tất cả các project dưới dạng mỗi folder con)
+        </ul>
+      </p>
+    </div>
+
+    <h1>Quy cách đặt tên Branch (Nhánh)</h1>
+    <strong>Dựa theo nhiệm vụ của nhánh đó - </strong> Tên branch phản ánh được chức năng hoặc nhiệm vụ đang làm trên nhánh đó
+    <div class="guideline-box">
+      
+      <p>
+        <ul>
+          <li><strong>Feature:</strong> feature/nên-chức-năng</li>
+          <li><strong>Fix:</strong> fix/tên-vấn-đề</li>
+          <li><strong>Modify:</strong> modify/tên-chức-năng</li>
+          <li><strong>Style:</strong> style/tên</li>
+          <li><strong>Document, README:</strong> docs/tên</li>
+          <li><strong>Config, setup:</strong> chore/tên</li>
+          <li><strong>Member:</strong> member/tên-thành-viên (có thể có hoặc ko)</li>
+        </ul>
+      </p>
+    </div>
+
+    <h1>Tạo file .gitignore</h1>
+    <strong>Tuỳ vào loại project - </strong> Tạo file .gitignore phù hợp với loại dự án để tránh commit các file không cần thiết
+    <div class="guideline-box">
+      
+      <p>
+        Các file cần được ignore có thể là:
+        <ul>
+          <li>File cấu hình IDE (ví dụ: .idea/)</li>
+          <li>File build (ví dụ: build/)</li>
+          <li>File log (ví dụ: *.log)</li>
+          <li>File tạm (ví dụ: *.tmp)</li>
+          <li>File nhạy cảm (ví dụ: .env)</li>
+        </ul>
+      </p>
+    </div>
+  </section>
+
+  <section class="branch-example" id="branch-example">
+    <div class="branch-example-title">
+      <h2>Ví dụ luồng branch khi làm việc nhóm</h2>
+      <p>Main là bản ổn định, develop là nơi gom code, mỗi member có nhánh riêng và tách tiếp các nhánh chức năng.</p>
+    </div>
+
+    <div class="branch-map" aria-label="Sơ đồ branch Git">
+      <div class="branch-level root">
+        <div class="branch-node main-branch">main</div>
+      </div>
+
+      <div class="branch-level">
+        <div class="branch-node develop-branch">develop</div>
+      </div>
+
+      <div class="branch-level members">
+        <div class="branch-group">
+          <div class="branch-node member-branch">member/an</div>
+          <div class="feature-list">
+            <span>feature/login-ui</span>
+            <span>feature/validate-form</span>
+          </div>
+        </div>
+
+        <div class="branch-group">
+          <div class="branch-node member-branch">member/binh</div>
+          <div class="feature-list">
+            <span>feature/student-list</span>
+            <span>feature/search-student</span>
+          </div>
+        </div>
+
+        <div class="branch-group">
+          <div class="branch-node member-branch">member/chi</div>
+          <div class="feature-list">
+            <span>feature/profile-page</span>
+            <span>feature/update-score</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="branch-flow-note">
+      <strong>Luồng merge:</strong>
+      <code>feature/*</code> → <code>member/*</code> → <code>develop</code> → <code>main</code>
+    </div>
+  </section>
+
+  <section class="project-workflow-section" id="project-workflow">
+    <div class="project-workflow-header">
+      <span class="workflow-kicker">Quy trình Git cho Web / Java</span>
+      <h2>Luồng làm việc nhóm 4 thành viên</h2>
+      <p>Mỗi thành viên tách việc vào branch riêng, đồng bộ với <code>develop</code>, sau đó tạo Pull Request để review và merge.</p>
+    </div>
+
+    <div class="workflow-dashboard">
+      <div class="workflow-mainline" aria-label="Nhánh develop trung tâm">
+        <div class="mainline-pulse"></div>
+        <div class="mainline-label">
+          <span>nhánh trung tâm</span>
+          <strong>develop</strong>
+        </div>
+      </div>
+
+      <div class="workflow-branches" aria-label="Sơ đồ các feature branch">
+        <article class="workflow-role-card ui-role">
+          <span class="role-label">Lập trình viên UI</span>
+          <h3>feature/ui</h3>
+          <p>Giao diện web, form, layout, component</p>
+          <div class="branch-actions">
+            <span>Kéo code</span>
+            <span>Commit</span>
+            <span>Đẩy code</span>
+            <span>Merge</span>
+            <span>PR</span>
+          </div>
+        </article>
+
+        <article class="workflow-role-card service-role">
+          <span class="role-label">Lập trình viên Java Core</span>
+          <h3>feature/service</h3>
+          <p>Service, model, xử lý nghiệp vụ chính</p>
+          <div class="branch-actions">
+            <span>Kéo code</span>
+            <span>Commit</span>
+            <span>Đẩy code</span>
+            <span>Merge</span>
+            <span>PR</span>
+          </div>
+        </article>
+
+        <article class="workflow-role-card api-role">
+          <span class="role-label">Lập trình viên API</span>
+          <h3>feature/api</h3>
+          <p>Controller, endpoint, validation, response</p>
+          <div class="branch-actions">
+            <span>Kéo code</span>
+            <span>Commit</span>
+            <span>Đẩy code</span>
+            <span>Merge</span>
+            <span>PR</span>
+          </div>
+        </article>
+
+        <article class="workflow-role-card database-role">
+          <span class="role-label">Lập trình viên Database</span>
+          <h3>feature/database</h3>
+          <p>Database, repository, migration, seed data</p>
+          <div class="branch-actions">
+            <span>Kéo code</span>
+            <span>Commit</span>
+            <span>Đẩy code</span>
+            <span>Merge</span>
+            <span>PR</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="integrator-panel">
+        <div class="integrator-card">
+          <span class="role-label">Team Leader / Người tích hợp</span>
+          <h3>Review code → Merge vào develop</h3>
+          <p>Kiểm tra conflict, chạy test, duyệt Pull Request và giữ <code>develop</code> ổn định.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="workflow-steps" aria-label="Các bước làm việc nhóm">
+      <div class="workflow-step"><strong>1</strong><span>Kéo code mới nhất từ <code>develop</code></span></div>
+      <div class="workflow-step"><strong>2</strong><span>Tạo feature branch</span></div>
+      <div class="workflow-step"><strong>3</strong><span>Làm việc độc lập</span></div>
+      <div class="workflow-step"><strong>4</strong><span>Commit và đẩy code</span></div>
+      <div class="workflow-step"><strong>5</strong><span>Merge <code>develop</code> mới nhất vào branch</span></div>
+      <div class="workflow-step"><strong>6</strong><span>Tạo Pull Request</span></div>
+      <div class="workflow-step"><strong>7</strong><span>Review và merge</span></div>
+      <div class="workflow-step"><strong>8</strong><span>Cả nhóm kéo lại <code>develop</code></span></div>
+    </div>
+
+    <div class="project-warning-grid">
+      <div class="project-warning-card danger">
+        <strong>Conflict file chung rất nguy hiểm</strong>
+        <span>Tránh sửa cùng lúc các file như config, database script, layout chung.</span>
+      </div>
+      <div class="project-warning-card">
+        <strong>Chia module rõ ràng</strong>
+        <span>Mỗi người phụ trách một phần: UI, service, API, database.</span>
+      </div>
+      <div class="project-warning-card">
+        <strong>Nên tách component</strong>
+        <span>Ưu tiên component nhỏ, class riêng, file riêng để dễ merge.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="teamwork-rules-section" id="teamwork-rules">
+    <div class="teamwork-rules-header">
+      <span class="workflow-kicker">GitHub Teamwork Rules</span>
+      <h2>Quy tắc teamwork khi làm việc nhóm với GitHub</h2>
+      <p>Các nguyên tắc cơ bản giúp team tránh conflict, giữ code sạch và merge vào <code>develop</code> an toàn.</p>
+    </div>
+
+    <div class="teamwork-block">
+      <div class="teamwork-block-title">
+        <span>01</span>
+        <h3>Các quy tắc bắt buộc khi teamwork</h3>
+      </div>
+
+      <div class="rules-checklist">
+        <div class="rule-item">Không commit trực tiếp vào <code>main</code></div>
+        <div class="rule-item">Mỗi người phải có branch riêng</div>
+        <div class="rule-item">Pull code mới nhất trước khi push</div>
+        <div class="rule-item">Commit message phải rõ nghĩa</div>
+        <div class="rule-item">Không sửa file người khác nếu chưa trao đổi</div>
+        <div class="rule-item">Không push code lỗi</div>
+        <div class="rule-item">Không để file rác trong project</div>
+        <div class="rule-item">Luôn kiểm tra conflict trước khi merge</div>
+        <div class="rule-item">Hoàn thành task nhỏ rồi mới commit</div>
+        <div class="rule-item">Không rename file lung tung</div>
+        <div class="rule-item">Không tự ý xoá code người khác</div>
+        <div class="rule-item">Tạo Pull Request trước khi merge vào <code>develop</code></div>
+      </div>
+    </div>
+
+    <div class="teamwork-block">
+      <div class="teamwork-block-title">
+        <span>02</span>
+        <h3>Quy tắc đặt commit message</h3>
+      </div>
+
+      <div class="commit-message-grid">
+        <article class="commit-message-card">
+          <div class="commit-code">feat(scope): add login UI</div>
+          <p><strong>feat</strong> dùng khi thêm chức năng mới.</p>
+        </article>
+        <article class="commit-message-card">
+          <div class="commit-code">fix(scope): validate email</div>
+          <p><strong>fix</strong> dùng khi sửa lỗi.</p>
+        </article>
+        <article class="commit-message-card">
+          <div class="commit-code">docs(scope): update README</div>
+          <p><strong>docs</strong> dùng khi sửa tài liệu.</p>
+        </article>
+        <article class="commit-message-card">
+          <div class="commit-code">style(scope): update navbar color</div>
+          <p><strong>style</strong> dùng khi chỉnh giao diện, format, màu sắc.</p>
+        </article>
+        <article class="commit-message-card">
+          <div class="commit-code">refactor(scope): clean code login service</div>
+          <p><strong>refactor</strong> dùng khi làm sạch code nhưng không đổi chức năng.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="teamwork-block">
+      <div class="teamwork-block-title">
+        <span>03</span>
+        <h3>Các lỗi teamwork thường gặp</h3>
+      </div>
+
+      <div class="teamwork-danger-grid">
+        <div class="danger-item">2 người sửa cùng 1 file</div>
+        <div class="danger-item">Quên pull trước khi push</div>
+        <div class="danger-item">Push nhầm lên <code>main</code></div>
+        <div class="danger-item">Commit quá nhiều file rác</div>
+        <div class="danger-item">Merge conflict</div>
+        <div class="danger-item">Không tạo branch riêng</div>
+        <div class="danger-item">Đặt tên branch lộn xộn</div>
+      </div>
+    </div>
+
+    <div class="teamwork-block">
+      <div class="teamwork-block-title">
+        <span>04</span>
+        <h3>Workflow teamwork chuẩn</h3>
+      </div>
+
+      <div class="teamwork-timeline">
+        <div class="timeline-step"><strong>1</strong><span>Pull <code>develop</code> mới nhất</span></div>
+        <div class="timeline-step"><strong>2</strong><span>Tạo branch feature</span></div>
+        <div class="timeline-step"><strong>3</strong><span>Làm task riêng</span></div>
+        <div class="timeline-step"><strong>4</strong><span>Commit code</span></div>
+        <div class="timeline-step"><strong>5</strong><span>Push branch</span></div>
+        <div class="timeline-step"><strong>6</strong><span>Tạo Pull Request</span></div>
+        <div class="timeline-step"><strong>7</strong><span>Review code</span></div>
+        <div class="timeline-step"><strong>8</strong><span>Merge vào <code>develop</code></span></div>
+        <div class="timeline-step"><strong>9</strong><span>Cả team pull lại <code>develop</code></span></div>
+      </div>
+    </div>
+
+    <div class="teamwork-block">
+      <div class="teamwork-block-title">
+        <span>05</span>
+        <h3>Mẹo teamwork tốt</h3>
+      </div>
+
+      <div class="teamwork-tips-grid">
+        <div class="tip-card">Chia task rõ ràng</div>
+        <div class="tip-card">Tách component nhỏ</div>
+        <div class="tip-card">File nào sửa nhiều thì báo team</div>
+        <div class="tip-card">Commit nhỏ và thường xuyên</div>
+        <div class="tip-card">Đặt tên branch dễ hiểu</div>
+        <div class="tip-card">Trao đổi trước khi sửa logic chung</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="command-container" id="command-list">
+
+    <div class="command-card">
+      <h2>Clone Project</h2>
+
+      <div class="code-box">
+        git clone https://github.com/your-project.git
+      </div>
+
+      <p>
+        Dùng để tải source code từ GitHub về máy.
+      </p>
+    </div>
+
+    <div class="command-card">
+      <h2>Create Branch</h2>
+
+      <div class="code-box">
+        git checkout -b feature/login
+      </div>
+
+      <p>
+        Tạo branch mới để làm feature riêng.
+      </p>
+    </div>
+
+    <div class="command-card">
+      <h2>Add & Commit</h2>
+
+      <div class="code-box">
+        git add .
+        <br><br>
+        git commit -m "Update UI"
+      </div>
+
+      <p>
+        Thêm file vào staging và commit code.
+      </p>
+    </div>
+
+    <div class="command-card">
+      <h2>Push Code</h2>
+
+      <div class="code-box">
+        git push origin feature/login
+      </div>
+
+      <p>
+        Đẩy code từ máy local lên GitHub.
+      </p>
+    </div>
+
+    <div class="command-card">
+      <h2>Pull Latest Code</h2>
+
+      <div class="code-box">
+        git pull origin develop
+      </div>
+
+      <p>
+        Cập nhật code mới nhất từ branch develop.
+      </p>
+    </div>
+
+  </section>
+
+  <footer>
+    © 2026 - GitHub Training Project
+    <script src="../js/cmd.js"></script>
+    <script src="../js/local.js"></script>
+  </footer>
+
+</body>
+</html>

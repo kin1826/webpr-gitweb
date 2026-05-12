@@ -1,0 +1,5 @@
+--> Khởi tạo Git: (Khởi tạo .git trong project)
+git init
+
+--> Gắn link Repo: (Gắn link Repo vào project local)
+git remote add origin <link>

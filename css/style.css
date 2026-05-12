@@ -1,0 +1,1448 @@
+/* Terminal-like Command Input */
+
+.cmd-terminal-section {
+    width: 90%;
+    margin: 36px auto 48px auto;
+    background: #181f2e;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(30,41,59,0.18);
+    padding: 0 0 24px 0;
+    position: relative;
+    border: 1.5px solid #232b3b;
+}
+.cmd-toolbar {
+    position: sticky;
+    top: 80px;
+    background: #232b3b;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px 8px 18px;
+    z-index: 2;
+    border-bottom: 1.5px solid #334155;
+    box-shadow: 0 2px 8px rgba(56,189,248,0.07);
+}
+.cmd-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.cmd-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 2px;
+    border: 1.5px solid #232b3b;
+}
+.cmd-dot.red { background: #ff5f56; border-color: #e0443e; }
+.cmd-dot.yellow { background: #ffbd2e; border-color: #dea123; }
+.cmd-dot.green { background: #27c93f; border-color: #13a10e; }
+
+.cmd-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+#cmd-save-btn {
+    background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 7px 20px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(56,189,248,0.10);
+    transition: background 0.18s, transform 0.18s;
+    outline: none;
+}
+#cmd-save-btn:hover {
+    background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+    transform: scale(1.04);
+}
+.cmd-textarea {
+    width: 96%;
+    margin: 18px 2%;
+    min-height: 180px;
+    background: #181f2e;
+    color: #e2e8f0;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    font-size: 1.08rem;
+    border: none;
+    border-radius: 0 0 8px 8px;
+    padding: 18px 16px;
+    outline: none;
+    resize: vertical;
+    box-shadow: 0 1px 8px rgba(56,189,248,0.08);
+    transition: box-shadow 0.18s;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+}
+.cmd-textarea:focus {
+    box-shadow: 0 2px 16px rgba(56,189,248,0.13);
+}
+*{
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+    color: #f1f5f9;
+}
+
+.hero-content h1{
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+    color: #38bdf8;
+    text-shadow: 0 2px 16px rgba(56,189,248,0.08);
+}
+
+.hero-content p{
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.8;
+    color: #cbd5e1;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+}
+
+.hero-content button{
+    padding: 16px 36px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.10);
+    transition: 0.2s;
+}
+
+.hero-content button:hover{
+    background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 24px rgba(56,189,248,0.18);
+}
+
+.card-section{
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    padding-bottom: 80px;
+    margin-top: 40px;
+}
+
+.card{
+    background: rgba(30, 41, 59, 0.98);
+    padding: 36px 28px 32px 28px;
+    border-radius: 22px;
+    border: 1.5px solid rgba(56,189,248,0.08);
+    transition: 0.25s;
+    box-shadow: 0 2px 12px rgba(30,41,59,0.10);
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover{
+    transform: translateY(-8px) scale(1.03);
+    border-color: #38bdf8;
+    box-shadow: 0 12px 32px rgba(56,189,248,0.18);
+}
+
+.icon{
+    font-size: 2.5rem;
+    margin-bottom: 18px;
+    color: #38bdf8;
+    filter: drop-shadow(0 2px 8px #38bdf855);
+}
+
+.card h2{
+    margin-bottom: 12px;
+    font-size: 1.4rem;
+    color: #f1f5f9;
+    font-weight: 700;
+}
+
+.card p{
+    color: #cbd5e1;
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* Home teamwork demo page */
+.home-hero {
+    width: 90%;
+    min-height: 430px;
+    margin: 54px auto 36px auto;
+    display: flex;
+    align-items: center;
+    background:
+        linear-gradient(135deg, rgba(15,23,42,0.94), rgba(30,41,59,0.86)),
+        radial-gradient(circle at 82% 18%, rgba(56,189,248,0.22), transparent 32%);
+    border: 1.5px solid rgba(56,189,248,0.14);
+    border-radius: 22px;
+    padding: 54px 46px;
+    box-shadow: 0 18px 42px rgba(2,6,23,0.28);
+}
+
+.home-hero-content {
+    max-width: 780px;
+}
+
+.home-kicker {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #facc15;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.home-hero h1 {
+    margin: 0 0 18px 0;
+    color: #e0f2fe;
+    font-size: 3rem;
+    line-height: 1.16;
+}
+
+.home-hero p,
+.team-section-heading p {
+    color: #cbd5e1;
+    line-height: 1.75;
+    font-size: 1.08rem;
+}
+
+.home-hero-btn {
+    display: inline-block;
+    margin-top: 16px;
+    color: #0f172a;
+    background: #38bdf8;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 13px 22px;
+    font-weight: 800;
+    transition: 0.18s;
+}
+
+.home-hero-btn:hover {
+    background: #22c55e;
+    transform: translateY(-2px);
+}
+
+.team-demo-intro,
+.team-sections {
+    width: 90%;
+    margin: 0 auto 42px auto;
+}
+
+.team-demo-card {
+    background: rgba(15,23,42,0.82);
+    border: 1px solid rgba(56,189,248,0.14);
+    border-radius: 18px;
+    padding: 26px;
+}
+
+.team-demo-card h2,
+.team-section-heading h2 {
+    margin: 0 0 16px 0;
+    color: #38bdf8;
+    font-size: 1.7rem;
+}
+
+.team-demo-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.team-demo-flow span {
+    position: relative;
+    color: #e2e8f0;
+    background: rgba(30,41,59,0.9);
+    border: 1px solid rgba(56,189,248,0.16);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.team-section-heading {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.member-work-section {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 22px;
+    align-items: center;
+    margin-bottom: 22px;
+    padding: 24px;
+    background: rgba(30,41,59,0.94);
+    border: 1.5px solid rgba(56,189,248,0.12);
+    border-radius: 18px;
+    box-shadow: 0 10px 28px rgba(2,6,23,0.18);
+}
+
+.member-badge {
+    min-height: 110px;
+    display: grid;
+    place-items: center;
+    color: #0f172a;
+    border-radius: 16px;
+    font-size: 1.05rem;
+    font-weight: 900;
+    text-align: center;
+}
+
+.member-one .member-badge { background: #38bdf8; }
+.member-two .member-badge { background: #22c55e; }
+.member-three .member-badge { background: #facc15; }
+.member-four .member-badge { background: #f97316; }
+
+.member-profile {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr);
+    gap: 22px;
+    align-items: center;
+}
+
+.member-profile img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 2px solid rgba(56,189,248,0.24);
+    box-shadow: 0 10px 24px rgba(2,6,23,0.22);
+}
+
+.member-content span {
+    color: #94a3b8;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.member-content h3 {
+    margin: 9px 0 9px 0;
+    color: #f8fafc;
+    font-size: 1.45rem;
+}
+
+.member-content p {
+    margin: 0;
+    color: #cbd5e1;
+    line-height: 1.7;
+}
+
+.student-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 12px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.student-info li {
+    color: #e2e8f0;
+    background: rgba(15,23,42,0.76);
+    border: 1px solid rgba(56,189,248,0.14);
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 0.94rem;
+}
+
+.student-info strong {
+    color: #38bdf8;
+}
+
+@media (max-width: 760px) {
+    .home-hero {
+        padding: 34px 22px;
+    }
+
+    .home-hero h1 {
+        font-size: 2.1rem;
+    }
+
+    .member-work-section {
+        grid-template-columns: 1fr;
+    }
+
+    .member-badge {
+        min-height: 72px;
+    }
+
+    .member-profile {
+        grid-template-columns: 1fr;
+    }
+
+    .member-profile img {
+        width: 100%;
+        height: 220px;
+    }
+}
+
+.page-title{
+    margin: 48px 0 32px 0;
+    text-align: center;
+}
+.page-title h1 {
+    font-size: 2.5rem;
+    color: #38bdf8;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+.page-title p {
+    color: #cbd5e1;
+    font-size: 1.1rem;
+}
+
+.page-section-nav {
+    width: 170px;
+    margin: 0;
+    position: fixed;
+    top: 92px;
+    left: 18px;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(15, 23, 42, 0.86);
+    border: 1px solid rgba(56,189,248,0.16);
+    border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(2,6,23,0.22);
+    backdrop-filter: blur(14px);
+}
+
+.page-section-nav a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 10px 12px;
+    border: 1px solid rgba(56,189,248,0.12);
+    border-radius: 10px;
+    background: rgba(30,41,59,0.72);
+    transition: 0.18s;
+}
+
+.page-section-nav a:hover {
+    color: #0f172a;
+    background: #38bdf8;
+    border-color: #38bdf8;
+}
+
+#cmd-input,
+#git-guidelines,
+#branch-example,
+#project-workflow,
+#teamwork-rules,
+#command-list {
+    scroll-margin-top: 160px;
+}
+
+@media (max-width: 1179px) {
+    .page-section-nav {
+        width: 90%;
+        margin: 0 auto 28px auto;
+        position: sticky;
+        top: 78px;
+        left: auto;
+        float: none;
+        flex-direction: row;
+        justify-content: flex-start;
+        overflow-x: auto;
+    }
+
+    .page-section-nav a {
+        flex: 0 0 auto;
+        border-radius: 999px;
+    }
+}
+
+/* Header, Navbar, Logo, Footer */
+header.header {
+    width: 100%;
+    background: rgba(30, 41, 59, 0.95);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    min-height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.navbar {
+    display: flex;
+    gap: 28px;
+}
+.navbar a {
+    color: #f1f5f9;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 8px 18px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+.navbar a:hover, .navbar a.active {
+    background: #38bdf8;
+    color: #0f172a;
+}
+footer {
+    width: 100%;
+    background: #1e293b;
+    color: #cbd5e1;
+    text-align: center;
+    padding: 24px 0 16px 0;
+    font-size: 1rem;
+    margin-top: 60px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Command Cards (gitcode.html) */
+.command-container {
+    width: 90%;
+    margin: 0 auto 60px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+}
+.command-card {
+    background: rgba(30, 41, 59, 0.98);
+    border-radius: 18px;
+    border: 1.5px solid rgba(56,189,248,0.08);
+    box-shadow: 0 2px 12px rgba(30,41,59,0.10);
+    padding: 28px 24px 22px 24px;
+    transition: 0.22s;
+    position: relative;
+    overflow: hidden;
+}
+.command-card:hover {
+    border-color: #38bdf8;
+    box-shadow: 0 8px 24px rgba(56,189,248,0.13);
+    transform: translateY(-6px) scale(1.02);
+}
+.command-card h2 {
+    color: #38bdf8;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+.command-card p {
+    color: #cbd5e1;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+.code-box {
+    background: #0f172a;
+    color: #38bdf8;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    font-size: 1.08rem;
+    padding: 18px 86px 18px 18px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    margin-top: 2px;
+    word-break: break-all;
+    box-shadow: 0 1px 6px rgba(56,189,248,0.08);
+    border: 1px solid rgba(56,189,248,0.10);
+    text-align: left;
+    position: relative;
+    min-height: 56px;
+}
+
+.copy-code-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(56,189,248,0.14);
+    color: #e0f2fe;
+    border: 1px solid rgba(56,189,248,0.35);
+    border-radius: 7px;
+    padding: 6px 10px;
+    font-size: 0.82rem;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.18s;
+}
+
+.copy-code-btn:hover {
+    background: #38bdf8;
+    color: #0f172a;
+}
+
+.copy-code-btn.copied {
+    background: #22c55e;
+    color: #052e16;
+    border-color: #22c55e;
+}
+
+/* Git naming and ignore guidelines */
+.git-guidelines-section {
+    padding: 0 0 30px 0;
+    overflow: hidden;
+}
+
+.git-guidelines-section .cmd-toolbar {
+    position: static;
+    top: auto;
+    justify-content: flex-start;
+    min-height: 42px;
+    margin-bottom: 26px;
+    box-shadow: none;
+}
+
+.git-guidelines-section h1 {
+    width: calc(100% - 48px);
+    margin: 30px auto 10px auto;
+    color: #22c55e;
+    font-size: 1.45rem;
+    line-height: 1.35;
+    font-weight: 800;
+}
+
+.git-guidelines-section > strong {
+    display: inline-block;
+    margin-left: 24px;
+    margin-bottom: 14px;
+    color: #facc15;
+    font-weight: 800;
+}
+
+.git-guidelines-section .guideline-box {
+    width: calc(100% - 48px);
+    margin: 0 auto 28px auto;
+    background: #0f172a;
+    color: #dbeafe;
+    border: 1px solid rgba(56,189,248,0.16);
+    border-left: 5px solid #38bdf8;
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: 0 8px 20px rgba(2,6,23,0.18);
+    line-height: 1.7;
+}
+
+.git-guidelines-section .guideline-box p {
+    margin: 0;
+}
+
+.git-guidelines-section .guideline-box ul {
+    margin: 12px 0 0 0;
+    padding-left: 22px;
+}
+
+.git-guidelines-section .guideline-box li {
+    margin: 8px 0;
+    color: #e2e8f0;
+}
+
+.git-guidelines-section strong {
+    color: #facc15;
+}
+
+.git-guidelines-section .guideline-box strong {
+    color: #38bdf8;
+}
+
+@media (max-width: 640px) {
+    .git-guidelines-section h1,
+    .git-guidelines-section .guideline-box {
+        width: calc(100% - 28px);
+    }
+
+    .git-guidelines-section h1 {
+        font-size: 1.22rem;
+        margin-top: 24px;
+    }
+
+    .git-guidelines-section > strong {
+        margin-left: 14px;
+        margin-right: 14px;
+        line-height: 1.6;
+    }
+
+    .git-guidelines-section .guideline-box {
+        padding: 16px;
+    }
+}
+
+/* Branch Example */
+.branch-example {
+    width: 90%;
+    margin: 0 auto 56px auto;
+    background: rgba(15, 23, 42, 0.72);
+    border: 1.5px solid rgba(56,189,248,0.14);
+    border-radius: 18px;
+    padding: 30px 24px;
+    box-shadow: 0 8px 28px rgba(15,23,42,0.22);
+}
+
+.branch-example-title {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.branch-example-title h2 {
+    color: #38bdf8;
+    font-size: 1.55rem;
+    margin: 0 0 10px 0;
+}
+
+.branch-example-title p {
+    color: #cbd5e1;
+    max-width: 760px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.branch-map {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    align-items: center;
+    padding: 6px 0 4px 0;
+}
+
+.branch-level {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.branch-level:not(.root)::before {
+    content: "";
+    position: absolute;
+    top: -34px;
+    left: 50%;
+    width: 2px;
+    height: 34px;
+    background: linear-gradient(180deg, #38bdf8, #22c55e);
+}
+
+.branch-level.members {
+    justify-content: space-between;
+    gap: 22px;
+}
+
+.branch-level.members::after {
+    content: "";
+    position: absolute;
+    top: -17px;
+    left: 16%;
+    right: 16%;
+    height: 2px;
+    background: linear-gradient(90deg, #38bdf8, #22c55e, #f59e0b);
+}
+
+.branch-group {
+    flex: 1;
+    min-width: 210px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+}
+
+.branch-group::before {
+    content: "";
+    position: absolute;
+    top: -34px;
+    width: 2px;
+    height: 34px;
+    background: #22c55e;
+}
+
+.branch-node {
+    min-width: 150px;
+    text-align: center;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    font-weight: 700;
+    color: #0f172a;
+    padding: 11px 18px;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    position: relative;
+    z-index: 1;
+}
+
+.main-branch {
+    background: #38bdf8;
+}
+
+.develop-branch {
+    background: #22c55e;
+}
+
+.member-branch {
+    background: #f59e0b;
+}
+
+.feature-list {
+    width: 100%;
+    display: grid;
+    gap: 10px;
+}
+
+.feature-list span {
+    display: block;
+    background: #111827;
+    color: #e2e8f0;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    font-size: 0.92rem;
+    text-align: center;
+    padding: 10px 12px;
+    border: 1px solid rgba(56,189,248,0.16);
+    border-radius: 10px;
+    overflow-wrap: anywhere;
+}
+
+.branch-flow-note {
+    margin: 26px auto 0 auto;
+    max-width: 780px;
+    color: #cbd5e1;
+    text-align: center;
+    line-height: 1.7;
+}
+
+.branch-flow-note code {
+    background: #0f172a;
+    color: #38bdf8;
+    padding: 4px 7px;
+    border-radius: 6px;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+}
+
+@media (max-width: 760px) {
+    .branch-level.members {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .branch-level.members::after {
+        display: none;
+    }
+
+    .branch-group::before {
+        background: linear-gradient(180deg, #22c55e, #f59e0b);
+    }
+}
+
+/* Web and Java team workflow */
+.project-workflow-section {
+    width: 90%;
+    margin: 0 auto 64px auto;
+    padding: 34px 24px;
+    background:
+        linear-gradient(135deg, rgba(8,13,28,0.96), rgba(17,24,39,0.92)),
+        repeating-linear-gradient(90deg, rgba(56,189,248,0.05) 0 1px, transparent 1px 74px);
+    border: 1.5px solid rgba(56,189,248,0.16);
+    border-radius: 18px;
+    box-shadow: 0 18px 42px rgba(2,6,23,0.28);
+    overflow: hidden;
+}
+
+.project-workflow-header {
+    max-width: 860px;
+    margin: 0 auto 32px auto;
+    text-align: center;
+}
+
+.workflow-kicker {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #facc15;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.project-workflow-header h2 {
+    margin: 0 0 12px 0;
+    color: #e0f2fe;
+    font-size: 1.85rem;
+    line-height: 1.25;
+}
+
+.project-workflow-header p {
+    margin: 0;
+    color: #cbd5e1;
+    line-height: 1.65;
+}
+
+.project-workflow-header code,
+.workflow-step code,
+.integrator-card code {
+    color: #38bdf8;
+    background: rgba(56,189,248,0.12);
+    padding: 3px 6px;
+    border-radius: 6px;
+}
+
+.workflow-dashboard {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr) 260px;
+    gap: 22px;
+    align-items: stretch;
+}
+
+.workflow-mainline {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 360px;
+    border: 1px solid rgba(56,189,248,0.14);
+    border-radius: 14px;
+    background: rgba(15,23,42,0.72);
+}
+
+.workflow-mainline::before {
+    content: "";
+    position: absolute;
+    top: 34px;
+    bottom: 34px;
+    width: 5px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #38bdf8, #22c55e, #38bdf8);
+    box-shadow: 0 0 22px rgba(56,189,248,0.32);
+}
+
+.mainline-pulse {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 8px rgba(34,197,94,0.14);
+}
+
+.mainline-label {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    background: #0f172a;
+    border: 1px solid rgba(56,189,248,0.26);
+    border-radius: 12px;
+    padding: 14px 18px;
+}
+
+.mainline-label span,
+.role-label {
+    display: block;
+    color: #94a3b8;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.mainline-label strong {
+    display: block;
+    margin-top: 5px;
+    color: #22c55e;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    font-size: 1.45rem;
+}
+
+.workflow-branches {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.workflow-role-card,
+.integrator-card,
+.workflow-step,
+.project-warning-card {
+    background: rgba(15,23,42,0.86);
+    border: 1px solid rgba(148,163,184,0.16);
+    border-radius: 14px;
+    box-shadow: 0 10px 26px rgba(2,6,23,0.18);
+}
+
+.workflow-role-card {
+    position: relative;
+    min-height: 170px;
+    padding: 18px;
+    overflow: hidden;
+}
+
+.workflow-role-card::before {
+    content: "";
+    position: absolute;
+    top: 28px;
+    left: -24px;
+    width: 48px;
+    height: 2px;
+    background: #38bdf8;
+    box-shadow: 0 0 12px rgba(56,189,248,0.42);
+}
+
+.workflow-role-card::after {
+    content: "Pull -> Branch -> Work -> Push -> PR";
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    color: rgba(203,213,225,0.28);
+    font-size: 0.72rem;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+}
+
+.workflow-role-card h3,
+.integrator-card h3 {
+    margin: 8px 0 8px 0;
+    color: #38bdf8;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    font-size: 1.08rem;
+}
+
+.workflow-role-card p,
+.integrator-card p {
+    margin: 0;
+    color: #cbd5e1;
+    line-height: 1.55;
+}
+
+.branch-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.branch-actions span {
+    color: #e0f2fe;
+    background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 999px;
+    padding: 5px 9px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.ui-role { border-left: 4px solid #38bdf8; }
+.service-role { border-left: 4px solid #22c55e; }
+.api-role { border-left: 4px solid #facc15; }
+.database-role { border-left: 4px solid #f97316; }
+
+.integrator-panel {
+    display: flex;
+    align-items: center;
+}
+
+.integrator-card {
+    position: relative;
+    padding: 22px;
+    border-color: rgba(250,204,21,0.28);
+}
+
+.integrator-card::before {
+    content: "Code Review";
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #0f172a;
+    background: #facc15;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.workflow-steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.workflow-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 74px;
+    padding: 14px;
+}
+
+.workflow-step strong {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    color: #0f172a;
+    background: #38bdf8;
+    border-radius: 50%;
+    font-size: 0.95rem;
+}
+
+.workflow-step span {
+    color: #e2e8f0;
+    line-height: 1.45;
+    font-size: 0.94rem;
+}
+
+.project-warning-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.project-warning-card {
+    padding: 16px 18px;
+}
+
+.project-warning-card strong {
+    display: block;
+    margin-bottom: 7px;
+    color: #38bdf8;
+}
+
+.project-warning-card span {
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+.project-warning-card.danger {
+    border-color: rgba(248,113,113,0.35);
+    background: rgba(127,29,29,0.18);
+}
+
+.project-warning-card.danger strong {
+    color: #fca5a5;
+}
+
+@media (max-width: 1060px) {
+    .workflow-dashboard {
+        grid-template-columns: 150px minmax(0, 1fr);
+    }
+
+    .integrator-panel {
+        grid-column: 1 / -1;
+    }
+
+    .workflow-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .project-warning-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .project-workflow-section {
+        padding: 28px 14px;
+    }
+
+    .workflow-dashboard,
+    .workflow-branches,
+    .workflow-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .workflow-mainline {
+        min-height: 120px;
+    }
+
+    .workflow-mainline::before {
+        left: 24px;
+        right: 24px;
+        top: 50%;
+        bottom: auto;
+        width: auto;
+        height: 5px;
+    }
+
+    .workflow-role-card::before {
+        display: none;
+    }
+}
+
+/* GitHub teamwork rules */
+.teamwork-rules-section {
+    width: 90%;
+    margin: 0 auto 64px auto;
+    padding: 34px 24px;
+    background:
+        linear-gradient(135deg, rgba(15,23,42,0.97), rgba(17,24,39,0.92)),
+        radial-gradient(circle at top right, rgba(56,189,248,0.14), transparent 34%);
+    border: 1.5px solid rgba(56,189,248,0.16);
+    border-radius: 18px;
+    box-shadow: 0 18px 42px rgba(2,6,23,0.28);
+}
+
+.teamwork-rules-header {
+    max-width: 850px;
+    margin: 0 auto 30px auto;
+    text-align: center;
+}
+
+.teamwork-rules-header h2 {
+    margin: 0 0 12px 0;
+    color: #e0f2fe;
+    font-size: 1.85rem;
+    line-height: 1.25;
+}
+
+.teamwork-rules-header p {
+    margin: 0;
+    color: #cbd5e1;
+    line-height: 1.65;
+}
+
+.teamwork-rules-section code {
+    color: #38bdf8;
+    background: rgba(56,189,248,0.12);
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+}
+
+.teamwork-block {
+    margin-top: 24px;
+    padding: 22px;
+    background: rgba(15,23,42,0.72);
+    border: 1px solid rgba(148,163,184,0.14);
+    border-radius: 16px;
+}
+
+.teamwork-block-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.teamwork-block-title span {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    color: #0f172a;
+    background: #38bdf8;
+    border-radius: 12px;
+    font-weight: 900;
+}
+
+.teamwork-block-title h3 {
+    margin: 0;
+    color: #f8fafc;
+    font-size: 1.25rem;
+}
+
+.rules-checklist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+}
+
+.rule-item,
+.danger-item,
+.tip-card {
+    position: relative;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    color: #e2e8f0;
+    background: rgba(30,41,59,0.88);
+    border: 1px solid rgba(56,189,248,0.13);
+    border-radius: 12px;
+    padding: 14px 16px 14px 44px;
+    line-height: 1.45;
+}
+
+.rule-item::before {
+    content: "✓";
+    position: absolute;
+    left: 16px;
+    color: #22c55e;
+    font-weight: 900;
+}
+
+.commit-message-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 14px;
+}
+
+.commit-message-card {
+    padding: 16px;
+    background: rgba(30,41,59,0.88);
+    border: 1px solid rgba(56,189,248,0.13);
+    border-radius: 12px;
+}
+
+.commit-code {
+    background: #020617;
+    color: #38bdf8;
+    border: 1px solid rgba(56,189,248,0.22);
+    border-radius: 10px;
+    padding: 13px 14px;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+}
+
+.commit-message-card p {
+    margin: 12px 0 0 0;
+    color: #cbd5e1;
+    line-height: 1.55;
+}
+
+.commit-message-card strong {
+    color: #facc15;
+}
+
+.teamwork-danger-grid,
+.teamwork-tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 12px;
+}
+
+.danger-item {
+    border-color: rgba(248,113,113,0.28);
+    background: rgba(127,29,29,0.18);
+}
+
+.danger-item::before {
+    content: "!";
+    position: absolute;
+    left: 16px;
+    width: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
+    color: #7f1d1d;
+    background: #fca5a5;
+    border-radius: 50%;
+    font-size: 0.78rem;
+    font-weight: 900;
+}
+
+.teamwork-timeline {
+    display: grid;
+    grid-template-columns: repeat(9, minmax(120px, 1fr));
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.timeline-step {
+    position: relative;
+    min-width: 120px;
+    min-height: 118px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    background: rgba(30,41,59,0.88);
+    border: 1px solid rgba(56,189,248,0.14);
+    border-radius: 14px;
+    padding: 14px;
+}
+
+.timeline-step:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #38bdf8;
+    font-weight: 900;
+    z-index: 1;
+}
+
+.timeline-step strong {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    color: #0f172a;
+    background: #22c55e;
+    border-radius: 50%;
+}
+
+.timeline-step span {
+    color: #e2e8f0;
+    line-height: 1.45;
+    font-size: 0.92rem;
+}
+
+.tip-card {
+    border-color: rgba(34,197,94,0.2);
+}
+
+.tip-card::before {
+    content: "•";
+    position: absolute;
+    left: 17px;
+    color: #22c55e;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+@media (max-width: 760px) {
+    .teamwork-rules-section {
+        padding: 28px 14px;
+    }
+
+    .teamwork-block {
+        padding: 18px 14px;
+    }
+
+    .teamwork-block-title {
+        align-items: flex-start;
+    }
+
+    .teamwork-rules-header h2 {
+        font-size: 1.45rem;
+    }
+}
+
+@media (min-width: 1180px) {
+    .cmd-terminal-section,
+    .branch-example,
+    .project-workflow-section,
+    .teamwork-rules-section,
+    .command-container {
+        width: calc(90% - 190px);
+        margin-left: calc(5% + 190px);
+        margin-right: 5%;
+    }
+}
